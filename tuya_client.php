@@ -1,6 +1,4 @@
 <?php
-// Tuya Client Helper
-
 function get_timestamp() {
     return round(microtime(true) * 1000);
 }

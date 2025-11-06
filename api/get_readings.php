@@ -2,8 +2,6 @@
 $config = require __DIR__ . '/../config.php';
 header('Content-Type: application/json');
 
-$device = $_GET['device'] ?? '';
-$dp = $_GET['dp'] ?? '';
 $limit = intval($_GET['limit'] ?? 200);
 
 $mysqli = new mysqli(
@@ -18,27 +16,20 @@ if ($mysqli->connect_errno) {
   exit;
 }
 
-$where = [];
-if ($device) $where[] = "device_id='" . $mysqli->real_escape_string($device) . "'";
-if ($dp) $where[] = "dp_name='" . $mysqli->real_escape_string($dp) . "'";
-
-$sql = "SELECT device_id, dp_name, dp_value, recorded_at 
-        FROM fridge_readings";
-
-if (count($where)) {
-  $sql .= " WHERE " . implode(' AND ', $where);
-}
-
-$sql .= " ORDER BY recorded_at DESC LIMIT $limit";
+// Fetch from energy_data instead of fridge_readings
+$sql = "SELECT date, energy_kwh FROM energy_data ORDER BY date DESC LIMIT $limit";
 
 $res = $mysqli->query($sql);
 $data = [];
 
 if ($res) {
   while ($row = $res->fetch_assoc()) {
-    $data[] = $row;
+    $data[] = [
+      'recorded_at' => $row['date'],
+      'dp_value' => $row['energy_kwh']
+    ];
   }
 }
 
 $mysqli->close();
-echo json_encode(array_reverse($data)); // show oldest first
+echo json_encode(array_reverse($data)); // oldest first

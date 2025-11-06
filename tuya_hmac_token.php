@@ -1,13 +1,13 @@
 <?php
-// tuya_hmac_token.php (EU API compatible)
+
 $config = require __DIR__ . '/config.php';
 
 function get_timestamp() {
-    return round(microtime(true) * 1000); // milliseconds
+    return round(microtime(true) * 1000); 
 }
 
 function get_signature($client_id, $secret, $t) {
-    // EU API expects client_id + t HMAC-SHA256 uppercase
+   
     return strtoupper(hash_hmac('sha256', $client_id . $t, $secret));
 }
 
@@ -22,7 +22,7 @@ function get_hmac_token($config){
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, '{}'); // required for EU API
+    curl_setopt($ch, CURLOPT_POSTFIELDS, '{}'); 
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "client_id: $client_id",
         "sign: $sign",
@@ -44,11 +44,11 @@ function get_hmac_token($config){
         return $json['result']['access_token'];
     }
 
-    // Show full response for debugging
+    
     throw new Exception('Token error: '.json_encode($json));
 }
 
-// Test token fetch
+
 try {
     $token = get_hmac_token($config);
     echo "Token: $token\n";

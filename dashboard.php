@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <title>Fridge Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: sans-serif;
-      background: #f3e6d8;
+      background: #e1e4eaff;
       padding: 20px;
     }
     .card {
@@ -22,13 +23,18 @@
       margin-right: 10px;
     }
     h2 {
-      color: #5c4400;
+      color: #070127ff;
+    }
+    select, input {
+      padding: 5px;
+      border: 1px solid #d9e6eaff;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>📊 Fridge Dashboard</h2>
+    <h2><i class="fa-solid fa-chart-column"></i> Fridge Dashboard</h2>
 
     <label>Device: 
       <select id="deviceSelect"></select>
@@ -44,23 +50,25 @@
   <script>
     const ctx = document.getElementById('chart').getContext('2d');
 
+    
     const chart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar', 
       data: {
         labels: [],
         datasets: [{
           label: 'Value',
           data: [],
-          fill: false,
-          borderColor: '#b3a78c',
-          tension: 0.2
+          backgroundColor: '#a1b7c4ff', 
+          borderColor: '#585079ff',
+          borderWidth: 1
         }]
       },
       options: {
         animation: false,
         scales: {
           x: {
-            title: { display: true, text: 'Time' }
+            title: { display: true, text: 'Time' },
+            ticks: { maxRotation: 90, minRotation: 45 }
           },
           y: {
             beginAtZero: true,
@@ -70,7 +78,7 @@
       }
     });
 
-    // Devices loaded from PHP config
+   
     const devices = <?php 
       $config = require __DIR__ . '/config.php';
       echo json_encode($config['device_ids']);
@@ -86,6 +94,7 @@
 
     deviceSelect.value = devices[0] || '';
 
+   
     async function fetchData() {
       const device = deviceSelect.value;
       const dp = document.getElementById('dpName').value || 'current';
@@ -102,7 +111,7 @@
     }
 
     fetchData();
-    setInterval(fetchData, 10000); // auto refresh every 10s
+    setInterval(fetchData, 10000); 
   </script>
 </body>
 </html>

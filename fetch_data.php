@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-// Step 1: Get Access Token
+
 $timestamp = round(microtime(true) * 1000);
 $stringToSign = $client_id . $timestamp;
 $sign = strtoupper(hash_hmac('sha256', $stringToSign, $client_secret));
@@ -24,10 +24,10 @@ $data = json_decode($response, true);
 $access_token = $data['result']['access_token'] ?? '';
 
 if (!$access_token) {
-    die("❌ Failed to get access token");
+    die(" Failed to get access token");
 }
 
-// Step 2: Fetch Device Data
+
 $curl = curl_init();
 curl_setopt_array($curl, [
     CURLOPT_URL => "$base_url/v1.0/devices/$device_id/status",
@@ -44,7 +44,7 @@ curl_close($curl);
 
 $device_data = json_decode($response, true);
 
-// Step 3: Save data to database
+
 if (!empty($device_data['result'])) {
     foreach ($device_data['result'] as $item) {
         $dp_name = $item['code'];
