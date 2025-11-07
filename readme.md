@@ -24,7 +24,8 @@ Fridge_monitor/
 ├── api/
 │ ├── get_readings.php # Fetches data from energy_data table as JSON
 │ 
-├── dashboard.html # Handles Chart.js visualization
+├── dashboard.php # Handles Chart.js visualization
+├── style.css
 ├── insert.php
 ├── energy_data.sql # Sample SQL schema for the database
 └── README.md # Project documentation

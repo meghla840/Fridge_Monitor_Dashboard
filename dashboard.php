@@ -1,84 +1,85 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Fridge Dashboard</title>
+  <title>Smart Fridge Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #e1e4eaff;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 900px;
-      margin: 0 auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    label {
-      margin-right: 10px;
-    }
-    h2 {
-      color: #070127ff;
-    }
-    select, input {
-      padding: 5px;
-      border: 1px solid #d9e6eaff;
-      border-radius: 5px;
-    }
-  </style>
+
+ <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="card">
-    <h2><i class="fa-solid fa-chart-column"></i> Fridge Dashboard</h2>
+  <div class="dashboard">
+    <h2><i class="fa-solid fa-temperature-high"></i> Smart Fridge Dashboard</h2>
 
-    <label>Device: 
-      <select id="deviceSelect"></select>
-    </label>
-
-    <label>DP Name: 
-      <input id="dpName" value="current" />
-    </label>
+    <div class="input-area">
+      <div class="input-group">
+        <label><i class="fa-solid fa-microchip"></i> Device</label>
+        <select id="deviceSelect"></select>
+      </div>
+      <div class="input-group">
+        <label><i class="fa-solid fa-database"></i> DP Name</label>
+        <input id="dpName" value="current" />
+      </div>
+    </div>
 
     <canvas id="chart" width="860" height="320"></canvas>
   </div>
 
-  <script>
-    const ctx = document.getElementById('chart').getContext('2d');
-
+<script>
+    
+  const ctx = document.getElementById('chart').getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'bar', 
+      type: 'bar',
       data: {
         labels: [],
         datasets: [{
           label: 'Value',
           data: [],
-          backgroundColor: '#a1b7c4ff', 
-          borderColor: '#585079ff',
-          borderWidth: 1
+          backgroundColor: 'rgba(180, 210, 224, 0.6)',
+          borderColor: '#599fc8ff',
+          borderWidth: 1.5,
+          borderRadius: 8,
         }]
       },
       options: {
-        animation: false,
+        responsive: true,
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         scales: {
           x: {
-            title: { display: true, text: 'Time' },
-            ticks: { maxRotation: 90, minRotation: 45 }
+            title: { display: true, text: 'Time', color: '#333', font: { weight: 'bold' } },
+            ticks: { color: '#333' },
+            grid: { color: '#f0f0f0' }
           },
           y: {
             beginAtZero: true,
-            title: { display: true, text: 'Value' }
+            title: { display: true, text: 'Value', color: '#333', font: { weight: 'bold' } },
+            ticks: { color: '#333' },
+            grid: { color: '#f0f0f0' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#333' } },
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            color: '#222',
+            font: { weight: 'bold', size: 12 },
+            formatter: function(value) {
+              return value.toFixed(1);
+            }
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
 
-   
+    // PHP Integration
     const devices = <?php 
       $config = require __DIR__ . '/config.php';
       echo json_encode($config['device_ids']);
@@ -94,7 +95,6 @@
 
     deviceSelect.value = devices[0] || '';
 
-   
     async function fetchData() {
       const device = deviceSelect.value;
       const dp = document.getElementById('dpName').value || 'current';
@@ -111,7 +111,7 @@
     }
 
     fetchData();
-    setInterval(fetchData, 10000); 
-  </script>
+
+</script>
 </body>
 </html>

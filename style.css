@@ -1,0 +1,128 @@
+
+   
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #333;
+      overflow-x: hidden;
+      animation: fadeInBody 1.2s ease forwards;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dashboard {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(15px);
+      padding: 40px 50px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 950px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards 0.5s;
+      transition: all 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dashboard:hover {
+      transform: scale(1.01);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #184e77;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 35px;
+    }
+
+    h2 i {
+      color: #168aad;
+      margin-right: 10px;
+      animation: pulseIcon 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseIcon {
+      0%, 100% { transform: scale(1); color: #168aad; }
+      50% { transform: scale(1.15); color: #1a759f; }
+    }
+
+    .input-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      animation: fadeInInputs 1.3s ease forwards 0.8s;
+      opacity: 0;
+    }
+
+    @keyframes fadeInInputs {
+      to { opacity: 1; }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .input-group i {
+      color: #b8c7cb;
+      margin-right: 6px;
+    }
+
+    select, input {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #d9d9d9;
+      background: #ffffffb0;
+      font-size: 15px;
+      font-family: inherit;
+      width: 200px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      transition: 0.3s ease;
+      outline: none;
+    }
+
+    select:focus, input:focus {
+      border-color: #011319;
+      box-shadow: 0 0 10px rgba(203, 226, 234, 0.3);
+    }
+
+    canvas {
+      background: rgba(253, 254, 255, 0.7);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(41, 41, 41, 0.08);
+      animation: fadeInChart 1.8s ease forwards 1s;
+      opacity: 0;
+    }
+
+    @keyframes fadeInChart {
+      to { opacity: 1; }
+    }
