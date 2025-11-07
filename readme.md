@@ -112,13 +112,13 @@ dashboard.php uses Chart.js to display a line chart of energy usage, updating dy
 
 - **Future Enhancements**
 
-Add real-time data updates using AJAX.
+    - Add real-time data updates using AJAX.
 
-Include daily/weekly/monthly analytics.
+    - Include daily/weekly/monthly analytics.
 
-Support multiple appliances in a single dashboard.
+    - Support multiple appliances in a single dashboard.
 
-Integrate with IoT devices for automated readings.
+    - Integrate with IoT devices for automated readings.
 
 - **Screenshot:**
 
